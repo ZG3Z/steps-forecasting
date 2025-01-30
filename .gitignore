@@ -1,4 +1,5 @@
-__pycache__/
+lib/__pycache__/
 .ipynb_checkpoints/
 .DS_Store
 data/apple_health_export_data/
+__pycache__/

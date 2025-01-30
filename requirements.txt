@@ -1,0 +1,14 @@
+matplotlib==3.9.2
+missingno==0.5.2
+mlxtend==0.23.1
+numpy==1.26.3
+optuna==4.2.0
+pandas==2.2.3
+plotly==5.24.1
+plotly-express==0.4.1
+prophet==1.1.6
+requests==2.32.3
+scikit-learn==1.5.2
+scipy==1.15.1
+spacy==3.8.2
+statsmodels==0.14.4
