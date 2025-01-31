@@ -1,4 +1,4 @@
-# Analiza aktywność fizycznej
+# Analiza aktywności fizycznej
 
 ## Struktura Projektu
 ```
