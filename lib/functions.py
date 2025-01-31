@@ -7,7 +7,7 @@ from plotly.subplots import make_subplots
 from statsmodels.tsa.seasonal import seasonal_decompose
 import scipy.stats as stats
 from sklearn.feature_selection import mutual_info_regression
-from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score, mean_absolute_percentage_error
+from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score
 from prophet import Prophet
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -23,10 +23,10 @@ def check_df(df, rows=5):
     print("##################### N/A #####################")
     print(df.isnull().sum())
 
-def plot_column_distribution(df, column, title):
+def plot_column_distribution(df, column, title, labels):
     column_count = df[column].value_counts().reset_index()
     column_count.columns = [column, 'count']
-    fig = px.histogram(column_count, x=column, y='count', marginal="box", hover_data=column_count.columns, title=title)
+    fig = px.histogram(column_count, x=column, y='count', marginal="box", hover_data=column_count.columns, title=title, labels=labels)
     fig.show()
     print(f"Statystyki dla kolumny '{column}':")
     print(df[column].describe())
@@ -47,11 +47,11 @@ def plot_line_subplots(df, time_col, value_col, variables, title):
     fig.update_layout(title=title, height=300 * len(variables),)
     fig.show()
 
-def plot_boxplot_summary(df, title):
+def plot_boxplot_summary(df, title, labels):
     numeric_columns = df.select_dtypes(include='number').columns[1:]
     df_numeric = df[numeric_columns]
     df_long = df_numeric.melt(var_name='Variable', value_name='Value')
-    fig = px.box(df_long, x='Variable', y='Value', title=title)
+    fig = px.box(df_long, x='Variable', y='Value', title=title, labels=labels)
     fig.show()
     print("Statystyki dla zmiennych numerycznych:")
     print(df_numeric.describe())
@@ -121,6 +121,7 @@ def plot_seasonal_decompose(df, column,  title, period=None):
     return fig
 
 def calculate_rolling_means_and_correlation_with_value(df, max_window):
+    df = df.copy()
     rolling_means = []
     for window in range(1, max_window + 1):
         df[f"roll_mean_{window}"] = df["value"].rolling(window=window).mean()
@@ -161,7 +162,7 @@ def plot_scatter_binned(df, target_col, bin_col, bins, bin_labels):
     df_copy = df.copy()
     df_copy[f'{bin_col}_bin'] = pd.cut(df_copy[bin_col], bins=bins, labels=bin_labels, include_lowest=True)
     fig_scatter = px.scatter(
-    df_copy, x=bin_col, y=target_col, color=f'{bin_col}_bin', title=f"Liczba kroków w zależności od zmiennej {bin_col}", labels={bin_col: f'Przedziały zmiennej {bin_col}', target_col: 'Liczba kroków'}, opacity=0.6)
+    df_copy, x=bin_col, y=target_col, color=f'{bin_col}_bin', title=f"Ilość kroków w zależności od zmiennej {bin_col}", labels={bin_col: f'Przedziały zmiennej {bin_col}', target_col: 'Ilość kroków'}, opacity=0.6)
     fig_scatter.show()
 
 def add_historical_features(df, lag_periods, rolling_windows, diff_values):
@@ -198,7 +199,7 @@ def plot_forecasts(df_plot, title):
     fig.show()
 
 def evaluate_sarima(train, test, exog_features):
-    sarima_model = SARIMAX(train['value'],exog=train[exog_features])
+    sarima_model = SARIMAX(train['value'],exog=train[exog_features], enforce_stationarity=False, enforce_invertibility=False)
     sarima_result = sarima_model.fit()  
     forecast = sarima_result.predict(start=test.index[0], end=test.index[-1], exog=test.drop(columns=['value']))
     mae = mean_absolute_error(test['value'], forecast)
