@@ -11,7 +11,7 @@
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-└── steps-forecasting.ipynb     # Notebook z analizą
+└── steps-forecasting.ipynb     # Notebook z projektem
 ```
 
 ## Etapy Projektu
@@ -32,7 +32,6 @@
 
 ### 4. Modelowanie
 - Porównanie modeli SARIMA i Prophet
-- Walidacja krzyżowa
 - Selekcja i dostrajanie modelu
 - Prognoza na danych testowych
 
