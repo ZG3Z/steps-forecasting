@@ -17,8 +17,8 @@
 ## Etapy Projektu
 
 ### 1. Zebranie danych
-- Gromadzenie danych o aktywności
-- Gromadzenie danych pogodowych
+- Zgromadzenie danych o aktywności
+- Zgromadzenie danych pogodowych
 
 ### 2. Przygotowanie danych
 - Przygotowanie danych o aktywności
@@ -27,8 +27,8 @@
 ### 3. Analiza danych
 - Analiza szeregu czasowego
 - Analiza zmiennych dodatkowych
-- Zmienne kalendarzowe
-- Zmienne pogodowe
+  - Zmienne kalendarzowe
+  - Zmienne pogodowe
 
 ### 4. Modelowanie
 - Porównanie modeli SARIMA i Prophet
