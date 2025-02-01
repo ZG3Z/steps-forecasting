@@ -11,6 +11,7 @@
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
+├── sf.pdf                      # Prezentacja projektu
 └── steps-forecasting.ipynb     # Notebook z projektem
 ```
 
